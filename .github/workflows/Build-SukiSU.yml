@@ -170,6 +170,8 @@ jobs:
           sed -i 's/ -dirty//g' msm-kernel/scripts/setlocalversion
           sed -i 's/ -dirty//g' external/dtc/scripts/setlocalversion
           sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' common/scripts/setlocalversion
+          sed -i '$s|echo "\$res"|echo "\-android14-11-o-g12ae2ca3ddd1"|' ./common/scripts/setlocalversion
+          sed -i 's|build-timestamp = $(or $(KBUILD_BUILD_TIMESTAMP), $(build-timestamp-auto))|build-timestamp = "Fri Apr 11 09:47:08 UTC 2025"|' ./common/init/Makefile
           git add -A
           git commit -m "Force remove -dirty suffix from kernel version"
 
