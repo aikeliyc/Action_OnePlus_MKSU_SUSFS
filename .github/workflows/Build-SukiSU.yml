@@ -332,7 +332,13 @@ jobs:
             fi
           fi
           
-
+      - name: Add make name
+        run: |
+         cd kernel_workspace/kernel_platform
+         sed -i '$s|echo "\$res"|echo "\-android15-8-g0261dbe3cf7e-ab12786384-4k"|' ./common/scripts/setlocalversion
+         sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" ./build/kernel/kleaf/impl/stamp.bzl
+         sed -i 's|build-timestamp = $(or $(KBUILD_BUILD_TIMESTAMP), $(build-timestamp-auto))|build-timestamp = "Wed Dec 11 19:16:38 UTC 2024"|' ./common/init/Makefile    
+         
       - name: Build kernel
         if: ${{ github.event.inputs.CPU == 'sm8650' || github.event.inputs.CPU == 'sm7675' }}
         run: |
